@@ -10,9 +10,9 @@ namespace ConsoleGameFramework.Base
     {
         public void Draw(World world)
         {
-            for (int j = 0; j < world.lines; j++)
+            for (int j = 0; j < world.Lines; j++)
             {
-                for (int i = 0; i < world.columns; i++)
+                for (int i = 0; i < world.Columns; i++)
                 {
                     Console.Write(world.At(j, i));
                 }

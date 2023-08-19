@@ -23,8 +23,8 @@ namespace ConsoleGameFramework.Base
 
         public Scene Add(string text)
         {
-            World.Draw(Top, 1, text);
-            Top++;
+            int tl = World.Draw(Top, 1, text);
+            Top += tl;
 
             return this;
         }

@@ -8,24 +8,24 @@ namespace ConsoleGameFramework.Base
 {
     internal class World
     {
-        private char[,] world;
+        private char[,] Map;
 
-        public int lines;
+        public int Lines;
 
-        public int columns;
+        public int Columns;
 
         public World(int lines, int columns)
         {
-            world = new char[lines, columns];
-            this.lines = lines;
-            this.columns = columns;
+            Map = new char[lines, columns];
+            Lines = lines;
+            Columns = columns;
         }
 
         internal void Fill()
         {
-            for (int l = 0; l < lines; l++)
+            for (int l = 0; l < Lines; l++)
             {
-                for (int c = 0; c < columns; c++)
+                for (int c = 0; c < Columns; c++)
                 {
                     // map outline
                     if (l is 0 && c is 0)
@@ -33,27 +33,27 @@ namespace ConsoleGameFramework.Base
                         Draw(l, c, '╔');
                         continue;
                     }
-                    if (c is 0 && l == lines - 1)
+                    if (c is 0 && l == Lines - 1)
                     {
                         Draw(l, c, '╚');
                         continue;
                     }
-                    if (c == columns - 1 && l is 0)
+                    if (c == Columns - 1 && l is 0)
                     {
                         Draw(l, c, '╗');
                         continue;
                     }
-                    if (c == columns - 1 && l == lines - 1)
+                    if (c == Columns - 1 && l == Lines - 1)
                     {
                         Draw(l, c, '╝');
                         continue;
                     }
-                    if (c is 0 || c == columns - 1)
+                    if (c is 0 || c == Columns - 1)
                     {
                         Draw(l, c, '║');
                         continue;
                     }
-                    if (l is 0 || l == lines - 1)
+                    if (l is 0 || l == Lines - 1)
                     {
                         Draw(l, c, '═');
                         continue;
@@ -64,37 +64,36 @@ namespace ConsoleGameFramework.Base
             }
         }
 
-        public void Draw(int l, int c, string s)
+        public int Draw(int l, int c, string s)
         {
             s = s.Trim();
             s = s.Replace("\r", "");
-            char[] chars = s.ToCharArray();
-            int l_w = l;
-            int c_w = c;
-
-            foreach (var item in chars)
+            string[] words = s.Split('\n');
+            int lt = l;
+            int total_lines = 0;
+            foreach (var word in words)
             {
-                if (item == '\n')
+                int ct = c;
+                foreach (var letter in word)
                 {
-                    l_w++;
-                    c_w = c;
+                    Draw(lt, ct, letter);
+                    ct++;
                 }
-                else
-                {
-                    Draw(l_w, c_w, item);
-                    c_w++;
-                }
+                lt++;
+                total_lines++;
             }
+
+            return total_lines;
         }
 
         public void Draw(int l, int c, char piece)
         {
-            world[l, c] = piece;
+            Map[l, c] = piece;
         }
 
         public char At(int l, int c)
         {
-            return world[l, c];
+            return Map[l, c];
         }
     }
 }
